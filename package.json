@@ -1,0 +1,70 @@
+{
+  "name": "vdl-test-suite",
+  "version": "0.0.1",
+  "description": "Test suite to demonstrate interopability between various VC issuers & verifiers.",
+  "main": "index.js",
+  "scripts": {
+    "parallel": "mocha tests/ --require esm --reporter ./node_modules/mocha-w3c-interop-reporter/index.js --reporter-options body=\"$PWD/body.hbs\",matrix=\"$PWD/matrix.hbs\",reportDir=\"$PWD/reports\",respec=\"$PWD/respecConfig.json\",title=\"Verifiable Driver's License Interoperability Report 1.0\",suiteLog='./suite.log' --parallel --timeout 15000",
+    "test": "mocha tests/ --require esm --reporter ./node_modules/mocha-w3c-interop-reporter/index.js --reporter-options body=\"$PWD/body.hbs\",matrix=\"$PWD/matrix.hbs\",reportDir=\"$PWD/reports\",respec=\"$PWD/respecConfig.json\",title=\"Verifiable Driver's License Interoperability Report 1.0\",suiteLog='./suite.log' --timeout 15000",
+    "generate-vdls": "node generate-vdls.js",
+    "upload": "aws s3 cp ./reports/ s3://verifiable-drivers-license-reports --recursive --acl public-read",
+    "lint": "eslint *.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/digitalbazaar/vdl-test-suite.git"
+  },
+  "keywords": [
+    "vDL",
+    "VC",
+    "jsonld",
+    "linked",
+    "data",
+    "digital",
+    "bazaar"
+  ],
+  "author": {
+    "name": "Digital Bazaar, Inc.",
+    "email": "support@digitalbazaar.com",
+    "url": "https://digitalbazaar.com/"
+  },
+  "bugs": {
+    "url": "https://github.com/digitalbazaar/vdl-test-suite/issues"
+  },
+  "homepage": "https://github.com/digitalbazaar/vdl-test-suite#readme",
+  "dependencies": {
+    "@digitalbazaar/did-method-key": "^1.0.0",
+    "@digitalbazaar/ed25519-signature-2020": "^2.1.0",
+    "@digitalbazaar/ed25519-verification-key-2020": "^2.1.1",
+    "@digitalbazaar/http-client": "^1.0.0",
+    "@digitalbazaar/vc": "^1.0.0",
+    "@digitalbazaar/vpqr": "^2.1.0",
+    "axios": "^0.21.1",
+    "chai": "^4.3.4",
+    "cit-context": "^2.0.0",
+    "credentials-context": "^1.0.0",
+    "csv-parse": "^4.15.3",
+    "did-context": "^3.0.1",
+    "ed25519-signature-2020-context": "^1.0.1",
+    "esm": "^3.2.25",
+    "file-size": "^1.0.0",
+    "jsonld-document-loader": "^1.1.0",
+    "mocha": "^8.3.2",
+    "mocha-w3c-interop-reporter": "github:digitalbazaar/mocha-w3c-interop-reporter#check-NaN-Infinity-percents",
+    "mochawesome": "^6.2.2",
+    "node-cbor": "^5.0.4",
+    "require-dir": "^1.2.0",
+    "uuid": "^8.3.2",
+    "vc-revocation-list-context": "^1.0.0",
+    "vdl-context": "github:digitalbazaar/vdl-context",
+    "x25519-key-agreement-2020-context": "^1.0.0"
+  },
+  "engines": {
+    "node": "14.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.23.0",
+    "eslint-config-digitalbazaar": "^2.6.1",
+    "eslint-plugin-jsdoc": "^32.3.0"
+  }
+}

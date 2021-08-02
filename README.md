@@ -22,8 +22,7 @@ https://w3id.org/vdl/interop-reports
 Installation is pretty simple:
 
 1. Install the `node_modules`.
-2. Generate test Driver's Licenses.
-3. Generate the latest certificates.
+2. Generate the latest vdls for 50 states.
 
 The following commands should do the above:
 ```
