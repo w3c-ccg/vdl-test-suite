@@ -1,0 +1,9 @@
+{
+  "name": "Digital Bazaar",
+  "implementation": "Demo",
+  "issuer": {
+    "id": "did:key:z6Mkg9AkjefxdJFSphkStzXwHQnbweN43mCqA37aANGRxF1o",
+    "endpoint": "https://issuer.demo.digitalbazaar.com/credentials/did%3Akey%3Az6MkmDoojMzE8aWK2a926xtVgBXY1GafcpnMSgGVaCdbAr3z/issueCredential"
+  },
+  "verifier": "https://verifier.demo.digitalbazaar.com/verifier/credentials"
+}
