@@ -4,16 +4,20 @@
     "code": "AL"
   },
   {
-    "name": "Arizona",
-    "code": "AZ"
-  },
-  {
     "name": "Alaska",
     "code": "AK"
   },
   {
+    "name": "Arizona",
+    "code": "AZ"
+  },
+  {
     "name": "Arkansas",
     "code": "AR"
+  },
+  {
+    "name": "California",
+    "code": "CA"
   },
   {
     "name": "Colorado",
@@ -34,6 +38,10 @@
   {
     "name": "Georgia",
     "code": "GA"
+  },
+  {
+    "name": "Hawaii",
+    "code": "HA"
   },
   {
     "name": "Idaho",
@@ -136,6 +144,10 @@
     "code": "OK"
   },
   {
+    "name": "Oregon",
+    "code": "OR"
+  },
+  {
     "name": "Pennsylvania",
     "code": "PA"
   },
@@ -172,6 +184,10 @@
     "code": "VA"
   },
   {
+    "name": "Washington",
+    "code": "WA"
+  },
+  {
     "name": "West Virginia",
     "code": "WV"
   },
@@ -182,21 +198,5 @@
   {
     "name": "Wyoming",
     "code": "WY"
-  },
-  {
-    "name": "California",
-    "code": "CA"
-  },
-  {
-    "name": "Oregon",
-    "code": "OR"
-  },
-  {
-    "name": "Washington",
-    "code": "WA"
-  },
-  {
-    "name": "Hawaii",
-    "code": "HA"
   }
 ]
