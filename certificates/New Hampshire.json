@@ -8,7 +8,7 @@
     "Iso18013DriversLicense"
   ],
   "credentialSubject": {
-    "id": "did:license:5cc3dd14-52e0-4cba-8abf-733f53793154",
+    "id": "did:license:06601c6a-15d1-4a40-83c9-63308dd64da4",
     "type": "Iso18013DriversLicense",
     "license": {
       "type": "Iso18013DriversLicense",
