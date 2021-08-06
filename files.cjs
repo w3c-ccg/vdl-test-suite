@@ -17,7 +17,7 @@ const asyncReadFile = promisify(readFile);
 /**
  * Gets the Data dir used to produce certificates.
  *
- * @param {string} path - A path to the who data dir.
+ * @param {string} path - A path to the data dir.
  *
  * @throws {Error} - Throws if the dir is not found or is empty.
  *
