@@ -9,8 +9,9 @@ const {paths} = require('./paths.cjs');
 const {v4: uuidv4} = require('uuid');
 const {CONTEXT_URL} = require('vdl-context');
 const stateList = require('./states');
+const didKeyDriver = require('@digitalbazaar/did-method-key').driver();
 
-function createVC(state) {
+async function createVC(state) {
   const contexts = [
     'https://www.w3.org/2018/credentials/v1',
     CONTEXT_URL,
@@ -20,11 +21,12 @@ function createVC(state) {
     'Iso18013DriversLicense'
   ];
   const fileName = `${state.name}.json`;
+  const {didDocument} = await didKeyDriver.generate();
   const certificate = {
     '@context': contexts,
     type,
     credentialSubject: {
-      id: `did:license:${uuidv4()}`,
+      id: didDocument.id,
       type: 'Iso18013DriversLicense',
       license: {
         type: 'Iso18013DriversLicense',
@@ -65,8 +67,8 @@ function createVC(state) {
 */
 async function generateCertificates() {
   try {
-    await Promise.all(stateList.flatMap(state => {
-      const {fileName, certificate} = createVC(state);
+    await Promise.all(stateList.flatMap(async state => {
+      const {fileName, certificate} = await createVC(state);
       const filePath = join(paths.certificates, fileName);
       return writeJSON({path: filePath, data: certificate});
     }));
