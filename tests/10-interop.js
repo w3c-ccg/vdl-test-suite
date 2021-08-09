@@ -121,6 +121,8 @@ describe('Verifiable Driver\'s License Credentials', function() {
             credential = response.data;
             credential.credentialSubject.should.eql(
               certificate.credentialSubject);
+            // remove portrait as we can't reduce it to binary right now
+            delete credential.credentialSubject.portrait;
             const vp = {
               '@context': 'https://www.w3.org/2018/credentials/v1',
               type: 'VerifiablePresentation',
