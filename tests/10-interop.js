@@ -18,6 +18,7 @@ const should = chai.should();
 // do not test these implementations' issuers or verifiers
 const notTest = [
   'Danube Tech',
+  //'Digital Bazaar',
   'Mavennet',
   'Mattr Labs',
   'mesur.io',
@@ -67,7 +68,9 @@ describe('Verifiable Driver\'s License Credentials', function() {
       after(async function() {
         const compressedVP = await createCompressedVC(
           {certificate, documentLoader});
-        const [vc] = compressedVP.verifiableCredential;
+        const [_vc] = compressedVP.verifiableCredential;
+        // format VC so context is first in examples
+        const vc = {'@context': _vc['@context'], ..._vc};
         reportData[0] = {
           label: certificate.name,
           data: JSON.stringify(vc, null, 2)
