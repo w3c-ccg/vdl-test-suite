@@ -34,9 +34,11 @@ class Implementation {
           id: `urn:uuid:${uuidv4()}`,
           issuanceDate: new Date().toISOString(),
           expirationDate: expires(),
-          issuer: this.settings.issuer.id
+          issuer: this.settings.issuer.id,
+          '@context': credential['@context']
         }
       };
+//console.log(JSON.stringify(body, null, 2));
       const result = await axios.post(
         this.settings.issuer.endpoint,
         JSON.stringify(body),
@@ -44,6 +46,7 @@ class Implementation {
       );
       return result;
     } catch(e) {
+//console.log('issuer error', e);
       // this is just to make debugging easier
       //console.error(e);
       throw e;
