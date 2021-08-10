@@ -6,7 +6,6 @@
 const {join} = require('path');
 const {writeJSON} = require('./files.cjs');
 const {paths} = require('./paths.cjs');
-const {v4: uuidv4} = require('uuid');
 const {CONTEXT_URL} = require('vdl-context');
 const stateList = require('./states');
 const didKeyDriver = require('@digitalbazaar/did-method-key').driver();
@@ -35,8 +34,8 @@ async function createVC(state) {
         given_name: 'SUSAN',
         portrait: '/9j/4AAQSkZJRgABAQEAkACQA...gcdgck5HtRRSClooooP/2Q==',
         birth_date: '1998-08-28',
-        issue_date: '2018-01-15T10:00:00.0000000-07:00',
-        expiry_date: '2022-08-27T12:00:00.0000000-06:00',
+        issue_date: '2018-01-15T10:00:00Z',
+        expiry_date: '2022-08-27T12:00:00Z',
         issuing_country: 'US',
         issuing_authority: state.code,
         /*

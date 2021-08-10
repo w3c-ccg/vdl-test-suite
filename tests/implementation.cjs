@@ -7,6 +7,7 @@ const axios = require('axios');
 const https = require('https');
 const {v4: uuidv4} = require('uuid');
 const httpsAgent = new https.Agent({rejectUnauthorized: false});
+const {ISOTimeStamp} = require('./helpers');
 
 const _headers = {
   Accept: 'application/ld+json,application/json',
@@ -23,13 +24,13 @@ class Implementation {
       const expires = () => {
         const date = new Date();
         date.setMonth(date.getMonth() + 2);
-        return date.toISOString();
+        return ISOTimeStamp({date});
       };
       const body = {
         credential: {
           ...credential,
           id: `urn:uuid:${uuidv4()}`,
-          issuanceDate: new Date().toISOString(),
+          issuanceDate: ISOTimeStamp(),
           expirationDate: expires(),
           issuer: this.settings.issuer.id,
           '@context': credential['@context']
