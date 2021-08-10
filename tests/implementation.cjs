@@ -68,7 +68,6 @@ class Implementation {
     } catch(e) {
       // this is just to make debugging easier
       if(e && e.response && e.response.data) {
-        console.log(e.response.data);
         throw new Error(JSON.stringify(e.response.data, null, 2));
       }
       throw e;
