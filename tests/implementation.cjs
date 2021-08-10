@@ -17,12 +17,9 @@ class Implementation {
   constructor(settings) {
     this.settings = settings;
   }
-  async issue({credential, auth}) {
+  async issue({credential}) {
     try {
-      const headers = {..._headers};
-      if(auth && auth.type === 'oauth2-bearer-token') {
-        headers.Authorization = `Bearer ${auth.accessToken}`;
-      }
+      const headers = {..._headers, ...this.settings.issuer.headers};
       const expires = () => {
         const date = new Date();
         date.setMonth(date.getMonth() + 2);
@@ -38,7 +35,6 @@ class Implementation {
           '@context': credential['@context']
         }
       };
-//console.log(JSON.stringify(body, null, 2));
       const result = await axios.post(
         this.settings.issuer.endpoint,
         JSON.stringify(body),
@@ -46,7 +42,6 @@ class Implementation {
       );
       return result;
     } catch(e) {
-//console.log('issuer error', e);
       // this is just to make debugging easier
       //console.error(e);
       throw e;
