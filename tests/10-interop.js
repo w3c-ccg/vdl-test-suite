@@ -20,7 +20,7 @@ const notTest = [
   'Danube Tech',
   //'Digital Bazaar',
   'Mavennet',
-  'MATTR',
+  //'MATTR',
   'mesur.io',
   'Dock',
   'Factom',
@@ -113,12 +113,22 @@ describe('Verifiable Driver\'s License Credentials', function() {
           // issues correctly
           it(`should be issued by ${issuer.name}`, async function() {
             const implementation = new Implementation(issuer);
-            const response = await implementation.issue(
+            const {data} = await implementation.issue(
               {credential: certificate});
-            should.exist(response);
+            should.exist(data);
+            // FIXME issuer should return 201
             //response.status.should.equal(201);
-            testCredential(response.data);
-            credential = response.data;
+            // if the response is not directly jsonld unwrap it
+            if(!data['@context']) {
+              for(const key of Object.keys(data)) {
+                const prop = data[key];
+                if(prop['@context']) {
+                  credential = prop;
+                  break;
+                }
+              }
+            }
+            testCredential(credential);
             credential.credentialSubject.should.eql(
               certificate.credentialSubject);
             // remove portrait as we can't reduce it to binary right now
