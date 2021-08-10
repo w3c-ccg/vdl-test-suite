@@ -20,3 +20,10 @@ export const createCompressedVC = async ({certificate, documentLoader}) => {
   });
   return vc.createPresentation({verifiableCredential, documentLoader});
 };
+
+// Javascript's default ISO timestamp is contains milliseconds.
+// This lops off the MS part of the UTC RFC3339 TimeStamp and replaces
+// it with a terminal Z.
+export const ISOTimeStamp = ({date = new Date()} = {}) => {
+  return date.toISOString().replace(/\.\d+Z$/, 'Z');
+};
