@@ -4,8 +4,8 @@
 'use strict';
 
 const {join} = require('path');
-const {writeJSON} = require('./files.cjs');
-const {paths} = require('./paths.cjs');
+const {writeJSON} = require('./files');
+const {paths} = require('./paths');
 const {CONTEXT_URL} = require('vdl-context');
 const stateList = require('./states');
 const didKeyDriver = require('@digitalbazaar/did-method-key').driver();

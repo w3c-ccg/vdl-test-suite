@@ -3,15 +3,15 @@
  */
 'use strict';
 
-import * as didKey from '@digitalbazaar/did-method-key';
-import citContext from 'cit-context';
-import didContext from 'did-context';
-import revocationContext from 'vc-revocation-list-context';
-import ed25519 from 'ed25519-signature-2020-context';
-import x25519 from 'x25519-key-agreement-2020-context';
-import cred from 'credentials-context';
-import {JsonLdDocumentLoader} from 'jsonld-document-loader';
-import {CONTEXT_URL as testContextUri, CONTEXT} from 'vdl-context';
+const didKey = require('@digitalbazaar/did-method-key');
+const citContext = require('cit-context');
+const didContext = require('did-context');
+const revocationContext = require('vc-revocation-list-context');
+const ed25519 = require('ed25519-signature-2020-context');
+const x25519 = require('x25519-key-agreement-2020-context');
+const cred = require('credentials-context');
+const {JsonLdDocumentLoader} = require('jsonld-document-loader');
+const {CONTEXT_URL: testContextUri, CONTEXT} = require('vdl-context');
 
 const {contexts: credentialsContext, constants: {CREDENTIALS_CONTEXT_V1_URL}} =
   cred;
