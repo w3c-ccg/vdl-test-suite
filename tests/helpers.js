@@ -1,5 +1,5 @@
-import vc from '@digitalbazaar/vc';
-import {Ed25519Signature2020} from '@digitalbazaar/ed25519-signature-2020';
+const vc = require('@digitalbazaar/vc');
+const {Ed25519Signature2020} = require('@digitalbazaar/ed25519-signature-2020');
 
 const didKeyDriver = require('@digitalbazaar/did-method-key').driver();
 

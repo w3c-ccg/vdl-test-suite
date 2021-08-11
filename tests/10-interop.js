@@ -4,15 +4,14 @@
 'use strict';
 
 const vpqr = require('@digitalbazaar/vpqr');
-
-import * as chai from 'chai';
-import filesize from 'file-size';
-import Implementation from './implementation.cjs';
-import {testCredential} from './assertions.js';
-import certificates from '../certificates.cjs';
-import allVendors from '../implementations.cjs';
-import {documentLoader} from './loader.js';
-import {createCompressedVC} from './helpers.js';
+const chai = require('chai');
+const filesize = require('file-size');
+const Implementation = require('./implementation');
+const {testCredential} = require('./assertions');
+const certificates = require('../certificates');
+const allVendors = require('../implementations');
+const {documentLoader} = require('./loader.js');
+const {createCompressedVC} = require('./helpers');
 
 const should = chai.should();
 // do not test these implementations' issuers or verifiers
