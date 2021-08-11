@@ -3,8 +3,8 @@
  */
 'use strict';
 
-import * as chai from 'chai';
-import {CONTEXT_URL as testContextUri} from 'vdl-context';
+const chai = require('chai');
+const {CONTEXT_URL: testContextUri} = require('vdl-context');
 
 const should = chai.should();
 
