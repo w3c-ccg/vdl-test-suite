@@ -33,7 +33,7 @@ const notTest = [
   'Transmute',
   // Unable to filter proofs: method-not-supported for multiple VCs
   // from different vendors (was able to verify themselves, Mattr, & others)
-  //'Spruce'
+  'Spruce'
 ];
 
 // remove the notTest implementations
