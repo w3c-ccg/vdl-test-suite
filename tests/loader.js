@@ -41,7 +41,7 @@ staticLoader.addStatic(testContextUri, CONTEXT);
 const didKeyDriver = didKey.driver();
 
 export const documentLoader = async url => {
-  if(url && url.startsWith('did:key')) {
+  if(url && url.startsWith('did:key:')) {
     const document = await didKeyDriver.get({url});
     return {
       contextUrl: null,
