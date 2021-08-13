@@ -71,6 +71,8 @@ describe('Verifiable Driver\'s License Credentials', function() {
         const [_vc] = compressedVP.verifiableCredential;
         // format VC so context is first in examples
         const vc = {'@context': _vc['@context'], ..._vc};
+        // remove driving privleges to avoid a CBOR-LD error
+        delete vc.credentialSubject.license.driving_privileges;
         reportData[0] = {
           label: certificate.name,
           data: JSON.stringify(vc, null, 2)
