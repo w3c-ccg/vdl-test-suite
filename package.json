@@ -37,6 +37,7 @@
     "@digitalbazaar/ed25519-signature-2020": "^2.1.0",
     "@digitalbazaar/ed25519-verification-key-2020": "^2.1.1",
     "@digitalbazaar/http-client": "^1.0.0",
+    "@digitalbazaar/security-context": "^1.0.0",
     "@digitalbazaar/vc": "^1.0.0",
     "@digitalbazaar/vpqr": "^2.1.0",
     "axios": "^0.21.1",
