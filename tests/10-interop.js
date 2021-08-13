@@ -11,7 +11,7 @@ const {testCredential} = require('./assertions');
 const certificates = require('../certificates');
 const allVendors = require('../implementations');
 const {documentLoader} = require('./loader.js');
-const {createCompressedVC} = require('./helpers');
+const {createCompressedVC, deepClone} = require('./helpers');
 const {createBBSreport} = require('../bbs/src');
 
 const should = chai.should();
@@ -70,9 +70,11 @@ describe('Verifiable Driver\'s License Credentials', function() {
           {certificate, documentLoader});
         const [_vc] = compressedVP.verifiableCredential;
         // format VC so context is first in examples
-        const vc = {'@context': _vc['@context'], ..._vc};
+        let vc = deepClone(_vc);
+        vc = {'@context': _vc['@context'], ..._vc};
         // remove driving privleges to avoid a CBOR-LD error
         delete vc.credentialSubject.license.driving_privileges;
+        delete vc.credentialSubject.license.portrait;
         reportData[0] = {
           label: certificate.name,
           data: JSON.stringify(vc, null, 2)
@@ -158,12 +160,15 @@ describe('Verifiable Driver\'s License Credentials', function() {
             testCredential(credential);
             credential.credentialSubject.should.eql(
               certificate.credentialSubject);
+            const verifiableCredential = JSON.parse(JSON.stringify(credential));
             // remove portrait as we can't reduce it to binary right now
-            delete credential.credentialSubject.portrait;
+            delete verifiableCredential.credentialSubject.license.portrait;
+            delete verifiableCredential.credentialSubject.
+              license.driving_privileges;
             const vp = {
               '@context': 'https://www.w3.org/2018/credentials/v1',
               type: 'VerifiablePresentation',
-              verifiableCredential: credential
+              verifiableCredential
             };
             const {
               payload,
