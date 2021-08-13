@@ -107,7 +107,8 @@ export const createBBSreport = async ({
     documentLoader
   });
   return {
-    inputDocument,
+    signedDocument,
+    disclosures,
     derivedProof,
     verified
   };
