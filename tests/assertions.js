@@ -26,8 +26,7 @@ export const testCredential = credential => {
   credential.should.have.property('type');
   credential.type.should.eql([
     'VerifiableCredential',
-    // FIXME this needs to be updated
-    'Iso18013DriversLicense'
+    'Iso18013DriversLicenseCredential'
   ]);
   credential.should.have.property('id');
   credential.id.should.be.a('string');
