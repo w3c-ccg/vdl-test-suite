@@ -17,7 +17,7 @@ async function createVC(state) {
   ];
   const type = [
     'VerifiableCredential',
-    'Iso18013DriversLicense'
+    'Iso18013DriversLicenseCredential'
   ];
   const fileName = `${state.name}.json`;
   const {didDocument} = await didKeyDriver.generate();
@@ -26,7 +26,6 @@ async function createVC(state) {
     type,
     credentialSubject: {
       id: didDocument.id,
-      type: 'Iso18013DriversLicense',
       license: {
         type: 'Iso18013DriversLicense',
         document_number: '542426814',
@@ -38,7 +37,6 @@ async function createVC(state) {
         expiry_date: '2022-08-27T12:00:00Z',
         issuing_country: 'US',
         issuing_authority: state.code,
-        /*
         driving_privileges: [{
           codes: [{code: 'D'}],
           vehicle_category_code: 'D',
@@ -51,7 +49,6 @@ async function createVC(state) {
           issue_date: '2019-01-01',
           expiry_date: '2017-01-01'
         }],
-        */
         un_distinguishing_sign: 'USA',
       }
     }
