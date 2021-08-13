@@ -17,10 +17,46 @@ import {
   BbsBlsSignatureProof2020,
   deriveProof
 } from '@mattrglobal/jsonld-signatures-bbs';
-import {sign, verify, purposes} from 'jsonld-signatures';
+import {extendContextLoader, sign, verify, purposes} from 'jsonld-signatures';
 
 import _keyPairOptions from './data/keyPair.json';
 import _disclosures from './data/deriveProofFrame.json';
+import exampleControllerDoc from './data/controllerDocument.json';
+import bbsContext from './data/bbs.json';
+import credentialContext from './data/credentialsContext.json';
+import jwsContext from './data/jwsContext.json';
+import {CONTEXT_URL as vdlContextUri, CONTEXT} from 'vdl-context';
+
+const documents = {
+  'did:example:489398593#test': _keyPairOptions,
+  'did:example:489398593': exampleControllerDoc,
+  'https://w3id.org/security/bbs/v1': bbsContext,
+  'https://www.w3.org/2018/credentials/v1': credentialContext,
+  'https://w3id.org/security/suites/jws-2020/v1': jwsContext,
+  [vdlContextUri]: CONTEXT
+};
+
+const customDocLoader = url => {
+  const context = documents[url];
+
+  if(context) {
+    return {
+      contextUrl: null, // this is for a context via a link header
+      document: context, // this is the actual document that was loaded
+      documentUrl: url // this is the actual context URL after redirects
+    };
+  }
+
+  console.log(
+    `Attempted to remote load context : '${url}', please cache instead`
+  );
+  throw new Error(
+    `Attempted to remote load context : '${url}', please cache instead`
+  );
+};
+
+//Extended document load that uses local contexts
+const _documentLoader = extendContextLoader(customDocLoader);
 
 /**
  * Creates a BBS+ report for a VC.
@@ -37,7 +73,7 @@ import _disclosures from './data/deriveProofFrame.json';
  */
 export const createBBSreport = async ({
   inputDocument,
-  documentLoader,
+  documentLoader = _documentLoader,
   keyPairOptions = _keyPairOptions,
   disclosures = _disclosures
 }) => {
@@ -57,7 +93,7 @@ export const createBBSreport = async ({
     purpose: new purposes.AssertionProofPurpose(),
     documentLoader
   });
-
+  console.log({signedDocument, disclosures});
   //Derive a proof
   const derivedProof = await deriveProof(signedDocument, disclosures, {
     suite: new BbsBlsSignatureProof2020(),
