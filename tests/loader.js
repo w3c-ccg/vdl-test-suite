@@ -10,6 +10,7 @@ const revocationContext = require('vc-revocation-list-context');
 const ed25519 = require('ed25519-signature-2020-context');
 const x25519 = require('x25519-key-agreement-2020-context');
 const cred = require('credentials-context');
+const securityContext = require('@digitalbazaar/security-context');
 const {JsonLdDocumentLoader} = require('jsonld-document-loader');
 const {CONTEXT_URL: testContextUri, CONTEXT} = require('vdl-context');
 const _keyPairOptions = require('../bbs/src/data/keyPair.json');
@@ -40,12 +41,17 @@ staticLoader.addStatic(VC_REVOCATION_LIST_CONTEXT_V1_URL,
 staticLoader.addStatic(CREDENTIALS_CONTEXT_V1_URL,
   credentialsContext.get(CREDENTIALS_CONTEXT_V1_URL));
 
+staticLoader.addStatic(securityContext.constants.CONTEXT_URL,
+  securityContext.contexts.get(securityContext.constants.CONTEXT_URL));
+
 staticLoader.addStatic(testContextUri, CONTEXT);
 
 staticLoader.addStatic('did:example:489398593#test', _keyPairOptions);
-staticLoader.addStatic( 'did:example:489398593', exampleControllerDoc);
+staticLoader.addStatic('did:example:489398593', exampleControllerDoc);
 staticLoader.addStatic('https://w3id.org/security/bbs/v1', bbsContext);
-staticLoader.addStatic('https://w3id.org/security/suites/jws-2020/v1', jwsContext);
+staticLoader.addStatic('https://w3id.org/security/v2', bbsContext);
+staticLoader.addStatic(
+  'https://w3id.org/security/suites/jws-2020/v1', jwsContext);
 
 const didKeyDriver = didKey.driver();
 
