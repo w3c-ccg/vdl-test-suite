@@ -27,3 +27,5 @@ export const createCompressedVC = async ({certificate, documentLoader}) => {
 export const ISOTimeStamp = ({date = new Date()} = {}) => {
   return date.toISOString().replace(/\.\d+Z$/, 'Z');
 };
+
+export const deepClone = data => JSON.parse(JSON.stringify(data, null, 2));
