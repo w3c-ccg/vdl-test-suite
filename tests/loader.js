@@ -12,6 +12,10 @@ const x25519 = require('x25519-key-agreement-2020-context');
 const cred = require('credentials-context');
 const {JsonLdDocumentLoader} = require('jsonld-document-loader');
 const {CONTEXT_URL: testContextUri, CONTEXT} = require('vdl-context');
+const _keyPairOptions = require('../bbs/src/data/keyPair.json');
+const exampleControllerDoc = require('../bbs/src/data/controllerDocument.json');
+const bbsContext = require('../bbs/src/data/bbs.json');
+const jwsContext = require('../bbs/src/data/jwsContext.json');
 
 const {contexts: credentialsContext, constants: {CREDENTIALS_CONTEXT_V1_URL}} =
   cred;
@@ -37,6 +41,11 @@ staticLoader.addStatic(CREDENTIALS_CONTEXT_V1_URL,
   credentialsContext.get(CREDENTIALS_CONTEXT_V1_URL));
 
 staticLoader.addStatic(testContextUri, CONTEXT);
+
+staticLoader.addStatic('did:example:489398593#test', _keyPairOptions);
+staticLoader.addStatic( 'did:example:489398593', exampleControllerDoc);
+staticLoader.addStatic('https://w3id.org/security/bbs/v1', bbsContext);
+staticLoader.addStatic('https://w3id.org/security/suites/jws-2020/v1', jwsContext);
 
 const didKeyDriver = didKey.driver();
 
