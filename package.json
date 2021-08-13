@@ -56,7 +56,7 @@
     "require-dir": "^1.2.0",
     "uuid": "^8.3.2",
     "vc-revocation-list-context": "^1.0.0",
-    "vdl-context": "github:digitalbazaar/vdl-context",
+    "vdl-context": "github:digitalbazaar/vdl-context#move-license-out-of-scoped-context",
     "x25519-key-agreement-2020-context": "^1.0.0"
   },
   "engines": {
