@@ -20,7 +20,7 @@ const notTest = [
   'Danube Tech',
   //'Digital Bazaar',
   'Mavennet',
-  //'MATTR',
+  'MATTR',
   'mesur.io',
   'Dock',
   'Factom',
@@ -89,11 +89,10 @@ describe('Verifiable Driver\'s License Credentials', function() {
           'Encoding: base32 alphanumeric'
         ];
         images.push({src: compressedQr.imageDataUrl, meta});
+        const inputDocument = {...certificate};
+        inputDocument['@context'].push('https://w3id.org/security/bbs/v1');
         // after the suite runs add a BBS+ disclosure report
-        const results = await createBBSreport({
-          inputDocument: vc,
-          documentLoader
-        });
+        const results = await createBBSreport({inputDocument});
         console.log(results);
       });
       for(const issuer of implementations) {
