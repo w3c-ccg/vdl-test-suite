@@ -12,6 +12,7 @@ const certificates = require('../certificates');
 const allVendors = require('../implementations');
 const {documentLoader} = require('./loader.js');
 const {createCompressedVC} = require('./helpers');
+const {createBBSreport} = require('../bbs/src');
 
 const should = chai.should();
 // do not test these implementations' issuers or verifiers
@@ -88,6 +89,12 @@ describe('Verifiable Driver\'s License Credentials', function() {
           'Encoding: base32 alphanumeric'
         ];
         images.push({src: compressedQr.imageDataUrl, meta});
+        // after the suite runs add a BBS+ disclosure report
+        const results = await createBBSreport({
+          inputDocument: vc,
+          documentLoader
+        });
+        console.log(results);
       });
       for(const issuer of implementations) {
         describe(issuer.name, function() {
