@@ -93,7 +93,6 @@ export const createBBSreport = async ({
     purpose: new purposes.AssertionProofPurpose(),
     documentLoader
   });
-  console.log({signedDocument, disclosures});
   //Derive a proof
   const derivedProof = await deriveProof(signedDocument, disclosures, {
     suite: new BbsBlsSignatureProof2020(),
