@@ -92,8 +92,28 @@ describe('Verifiable Driver\'s License Credentials', function() {
         const inputDocument = {...certificate};
         inputDocument['@context'].push('https://w3id.org/security/bbs/v1');
         // after the suite runs add a BBS+ disclosure report
-        const results = await createBBSreport({inputDocument});
-        console.log(results);
+        const {
+          signedDocument,
+          disclosures,
+          derivedProof,
+          verified
+        } = await createBBSreport({inputDocument});
+        reportData.push({
+          label: 'A BBS+ Signed Document',
+          data: JSON.stringify(signedDocument, null, 2)
+        });
+        reportData.push({
+          label: 'Disclosures from the Signed Document',
+          data: JSON.stringify(disclosures, null, 2)
+        });
+        reportData.push({
+          label: 'A Derived Proof with the disclosures',
+          data: JSON.stringify(derivedProof, null, 2)
+        });
+        reportData.push({
+          label: 'The verified derived proof',
+          data: JSON.stringify(verified, null, 2)
+        });
       });
       for(const issuer of implementations) {
         describe(issuer.name, function() {
