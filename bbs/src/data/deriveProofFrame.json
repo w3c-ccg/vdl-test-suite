@@ -4,9 +4,13 @@
     "https://w3id.org/vdl/v1",
     "https://w3id.org/security/bbs/v1"
   ],
-  "type": ["VerifiableCredential", "Iso18013DriversLicenseCredential"],
+  "type": [
+    "VerifiableCredential",
+    "Iso18013DriversLicense"
+  ],
   "credentialSubject": {
     "@explicit": true,
+    "type": "Iso18013DriversLicense",
     "license": {
       "type": "Iso18013DriversLicense",
       "@explicit": true,
