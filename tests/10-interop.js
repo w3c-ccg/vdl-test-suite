@@ -20,7 +20,7 @@ const notTest = [
   'Danube Tech',
   //'Digital Bazaar',
   'Mavennet',
-  'MATTR',
+  //'MATTR',
   'mesur.io',
   'Dock',
   'Factom',
