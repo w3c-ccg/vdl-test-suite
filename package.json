@@ -7,7 +7,6 @@
     "parallel": "npm run generate-vdls && mocha tests/ --require esm --reporter ./node_modules/mocha-w3c-interop-reporter/index.js --reporter-options body=\"$PWD/body.hbs\",matrix=\"$PWD/matrix.hbs\",reportDir=\"$PWD/reports\",respec=\"$PWD/respecConfig.json\",title=\"Verifiable Driver's License Interoperability Report 1.0\",helpers=\"$PWD/templateHelpers.js\",suiteLog='./suite.log' --parallel --timeout 15000",
     "test": "npm run generate-vdls && mocha tests/ --require esm --reporter ./node_modules/mocha-w3c-interop-reporter/index.js --reporter-options body=\"$PWD/body.hbs\",matrix=\"$PWD/matrix.hbs\",reportDir=\"$PWD/reports\",respec=\"$PWD/respecConfig.json\",title=\"Verifiable Driver's License Interoperability Report 1.0\",helpers=\"$PWD/templateHelpers.js\",suiteLog='./suite.log' --timeout 15000",
     "generate-vdls": "node generate-vdls.js",
-    "upload": "aws s3 cp ./reports/ s3://verifiable-drivers-license-reports --recursive --acl public-read",
     "lint": "eslint *.js",
     "postinstall": "cd bbs && npm i"
   },
