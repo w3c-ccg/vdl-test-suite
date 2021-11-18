@@ -127,7 +127,7 @@ describe('Verifiable Driver\'s License Credentials', function() {
                   const prop = credential[key];
                   // when we find the first context that should be the VC
                   if(prop['@context']) {
-                    // set the credential as that object
+                    // set the credential as the first object with an `@context`
                     credential = prop;
                     break;
                   }
@@ -142,8 +142,9 @@ describe('Verifiable Driver\'s License Credentials', function() {
           // this ensures the implementation issuer
           // issues correctly
           it(`should be issued by ${issuer.name}`, async function() {
-            should.exist(credential);
-            should.not.exist(error);
+            should.exist(
+              credential, `Expected VC from ${issuer.name} to exist.`);
+            should.not.exist(error, `Expected ${issuer.name} to not error.`);
 
             // FIXME issuer should return 201
             //issuerResponse.status.should.equal(201);
@@ -154,6 +155,8 @@ describe('Verifiable Driver\'s License Credentials', function() {
             const verifiableCredential = JSON.parse(JSON.stringify(credential));
             // remove portrait as we can't reduce it to binary right now
             delete verifiableCredential.credentialSubject.license.portrait;
+            // FIXME remove driving_privileges until we have a cbor
+            // schema for them
             delete verifiableCredential.credentialSubject.
               license.driving_privileges;
             const vp = {
@@ -181,7 +184,6 @@ describe('Verifiable Driver\'s License Credentials', function() {
             actualVP.should.be.an(
               'object', 'Expected actualVP to be an object');
             actualVP.should.eql(vp);
-            // use the DB Data in the test suite
           });
           // this sends a credential issued by the implementation
           // to each verifier
@@ -198,7 +200,7 @@ describe('Verifiable Driver\'s License Credentials', function() {
               // verifier returns 200
               response.status.should.equal(200);
               should.exist(response.data);
-              // verifier reponses vary but are all objects
+              // verifier responses vary but are all objects
               response.data.should.be.an('object');
             });
           }
