@@ -31,8 +31,6 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
           branch: gh-pages
-          folder: .
+          folder: ./reports
           token: ${{ secrets.GITHUB_TOKEN }}
-          git-config-name: 'vdl[bot]'
-          git-config-email: 'vdl[bot]@users.noreply.github.com'
           single-commit: true
