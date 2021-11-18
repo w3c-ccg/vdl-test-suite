@@ -47,8 +47,6 @@ describe('Verifiable Driver\'s License Credentials', function() {
       this.reportData = reportData;
       this.images = images;
 
-      // this is the credential for the verifier tests
-      let credential = null;
       // after the suite runs add a compressed image
       after(async function() {
         const compressedVP = await createCompressedVC(
@@ -105,6 +103,11 @@ describe('Verifiable Driver\'s License Credentials', function() {
         });
       });
       for(const issuer of implementations) {
+        // this is the credential for the verifier tests
+        let credential = null;
+        //FIXME issuerResponse should be used to check status 201
+        //let issuerResponse = null;
+        let error = null;
         describe(issuer.name, function() {
           before(async function() {
             try {
@@ -113,35 +116,38 @@ describe('Verifiable Driver\'s License Credentials', function() {
               const implementation = new Implementation(issuer);
               const response = await implementation.issue(
                 {credential: certificate});
-              should.exist(response);
+              //FIXME issuerResponse should be used to check status 201
+              //issuerResponse = response;
               // this credential is not tested
               // we just send it to each verifier
               credential = response.data;
+              // if the response.data is not directly jsonld unwrap it
+              if(!credential['@context']) {
+                for(const key of Object.keys(credential)) {
+                  const prop = credential[key];
+                  // when we find the first context that should be the VC
+                  if(prop['@context']) {
+                    // set the credential as that object
+                    credential = prop;
+                    break;
+                  }
+                }
+              }
             } catch(e) {
               console.error(`${issuer.name} failed to issue a ` +
                 'credential for verification tests', e);
-              throw e;
+              error = e;
             }
           });
           // this ensures the implementation issuer
           // issues correctly
           it(`should be issued by ${issuer.name}`, async function() {
-            const implementation = new Implementation(issuer);
-            const {data} = await implementation.issue(
-              {credential: certificate});
-            should.exist(data);
+            should.exist(credential);
+            should.not.exist(error);
+
             // FIXME issuer should return 201
-            //response.status.should.equal(201);
-            // if the response is not directly jsonld unwrap it
-            if(!data['@context']) {
-              for(const key of Object.keys(data)) {
-                const prop = data[key];
-                if(prop['@context']) {
-                  credential = prop;
-                  break;
-                }
-              }
-            }
+            //issuerResponse.status.should.equal(201);
+
             testCredential(credential);
             credential.credentialSubject.should.eql(
               certificate.credentialSubject);
