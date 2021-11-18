@@ -1,0 +1,38 @@
+name: Generate Interop Report
+
+on:
+  workflow_dispatch:
+  schedule:
+    # update the integration suite once per week at Sunday 5am UTC
+    - cron: '5 0 * * 0'
+
+jobs:
+  test-node:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+      - name: 'Clean VDLs'
+        run: rm -f ./certificates/*.json
+      - name: 'Generate Latest VDLs'
+        run: npm run generate
+      - name: Run test with Node.js ${{ matrix.node-version }}
+        run: npm run test
+        continue-on-error: true
+      - name: Deploy to Github Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.5
+        with:
+          branch: gh-pages
+          folder: .
+          token: ${{ secrets.GITHUB_TOKEN }}
+          git-config-name: 'vdl[bot]'
+          git-config-email: 'vdl[bot]@users.noreply.github.com'
+          single-commit: true
