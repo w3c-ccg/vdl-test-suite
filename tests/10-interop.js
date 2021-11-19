@@ -23,7 +23,7 @@ const test = [
   'Spruce'
 ];
 
-// only test white listed implementations
+// only test listed implementations
 const implementations = allVendors.filter(v => test.includes(v.name));
 
 describe('Verifiable Driver\'s License Credentials', function() {
