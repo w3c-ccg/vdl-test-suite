@@ -6,7 +6,6 @@
 .project
 .settings
 results/
-reports/
 mochawesome-report/
 TAGS
 config.json
