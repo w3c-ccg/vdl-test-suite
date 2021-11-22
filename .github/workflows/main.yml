@@ -28,8 +28,6 @@ jobs:
         run: npm install
       - name: Clean VDLs
         run: rm -f ./certificates/*.json
-      - name: Generate Latest VDLs
-        run: npm run generate
       - name: Run test with Node.js ${{ matrix.node-version }}
         run: npm run test
         continue-on-error: true
