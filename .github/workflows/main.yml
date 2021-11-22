@@ -20,9 +20,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Authenticate with github (Expires Jan 2022)
-      - run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.DB_PACKAGE_READ }}" > ~/.npmrc
+        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.DB_PACKAGE_READ }}" > ~/.npmrc
       - name: Install npm dependencies
-      - run: npm install
+        run: npm install
       - name: Clean VDLs
         run: rm -f ./certificates/*.json
       - name: Generate Latest VDLs
