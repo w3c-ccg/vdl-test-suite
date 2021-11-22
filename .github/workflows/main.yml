@@ -34,8 +34,8 @@ jobs:
       - name: Deploy to Github Pages
         uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
-          branch: test-pages
+          branch: gh-pages
           folder: reports
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Report Deployment Status
+      - name: Report Github Pages Deployment Status
         run: echo $deployment_status
