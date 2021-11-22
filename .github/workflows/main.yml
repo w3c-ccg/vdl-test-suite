@@ -37,4 +37,3 @@ jobs:
           branch: gh-pages
           folder: reports
           token: ${{ secrets.GITHUB_TOKEN }}
-          single-commit: true
