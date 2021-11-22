@@ -19,10 +19,12 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+      - name: Authenticate with github (Expires Jan 2022)
+      - run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.DB_PACKAGE_READ }}" > ~/.npmrc
       - run: npm install
-      - name: 'Clean VDLs'
+      - name: Clean VDLs
         run: rm -f ./certificates/*.json
-      - name: 'Generate Latest VDLs'
+      - name: Generate Latest VDLs
         run: npm run generate
       - name: Run test with Node.js ${{ matrix.node-version }}
         run: npm run test
