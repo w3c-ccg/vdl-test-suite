@@ -77,18 +77,9 @@
     <div>
     {{#if matrix.reportData}}
       {{#each matrix.reportData}}
-        {{#if this.details}}
-          <details>
-            <summary>{{this.label}}</summary>
-<pre class="example small-font" title="{{this.label}} Verifiable Driver's License Certificate">
+<pre class="example small-font" style="white-space: break-spaces; word-break: break-all;" title="{{this.label}}">
 {{{this.data}}}
 </pre>
-          </details>
-        {{else}}
-<pre class="example small-font" title="{{this.label}} Verifiable Driver's License Certificate">
-{{{this.data}}}
-</pre>
-        {{/if}}
       {{/each}}
     {{/if}}
     </div>
