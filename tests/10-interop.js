@@ -18,9 +18,9 @@ const should = chai.should();
 
 // test these implementations' issuers or verifiers
 const test = [
-  'Digital Bazaar',
-  'MATTR',
-  'Spruce'
+  'Digital Bazaar'
+  // 'MATTR',
+  // 'Spruce'
 ];
 
 // only test listed implementations
