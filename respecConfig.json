@@ -1,9 +1,9 @@
 {
-  "specStatus": "ED",
+  "specStatus": "unofficial",
   "shortName": "verifiable-drivers-license-test-suite",
   "subtitle": "Interoperability Report for Verifiable Driver's License Credentials",
   "github": "https://github.com/digitalbazaar/vdl-test-suite",
-  "edDraftURI": "http://vdl-interop-reports.s3-website.us-east-2.amazonaws.com/",
+  "edDraftURI": "https://digitalbazaar.github.io/vdl-test-suite/",
   "doJsonLd": true,
   "includePermalinks": false,
   "editors": [
@@ -15,7 +15,5 @@
       "company": "Digital Bazaar", "companyURL": "http://digitalbazaar.com/" },
     { "name": "Manu Sporny", "url": "http://manu.sporny.org/",
       "company": "Digital Bazaar", "companyURL": "http://digitalbazaar.com/" }
-    ],
-  "previousPublishDate": "2021-04-09T19:27:46.840Z",
-  "previousMaturity": "CG-DRAFT"
+    ]
 }
