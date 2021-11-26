@@ -21,7 +21,7 @@ async function createVC(state) {
   ];
   const fileName = `${state.name}.json`;
   const {didDocument} = await didKeyDriver.generate();
-  const certificate = {
+  const credential = {
     '@context': contexts,
     type,
     credentialSubject: {
@@ -53,20 +53,20 @@ async function createVC(state) {
       }
     }
   };
-  return {fileName, certificate};
+  return {fileName, credential};
 }
 
 /**
  * Formats data into VCs.
  *
- * @returns {Promise} Writes data to `/certificates` and exits.
+ * @returns {Promise} Writes data to `/credentials` and exits.
 */
 async function generateCertificates() {
   try {
     await Promise.all(stateList.flatMap(async state => {
-      const {fileName, certificate} = await createVC(state);
-      const filePath = join(paths.certificates, fileName);
-      return writeJSON({path: filePath, data: certificate});
+      const {fileName, credential} = await createVC(state);
+      const filePath = join(paths.credentials, fileName);
+      return writeJSON({path: filePath, data: credential});
     }));
   } catch(e) {
     console.error(e);

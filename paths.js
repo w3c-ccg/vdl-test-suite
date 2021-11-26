@@ -6,7 +6,7 @@
 const {join} = require('path');
 
 const paths = {
-  certificates: join(process.cwd(), 'certificates'),
+  credentials: join(process.cwd(), 'credentials'),
   implementations: join(process.cwd(), 'implementations')
 };
 

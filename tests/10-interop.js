@@ -8,7 +8,7 @@ const chai = require('chai');
 const filesize = require('file-size');
 const Implementation = require('./implementation');
 const {testCredential} = require('./assertions');
-const certificates = require('../certificates');
+const certificates = require('../credentials');
 const allVendors = require('../implementations');
 const {documentLoader} = require('./loader.js');
 const {createCompressedVC, deepClone} = require('./helpers');
@@ -18,9 +18,9 @@ const should = chai.should();
 
 // test these implementations' issuers or verifiers
 const test = [
-  'Digital Bazaar'
-  // 'MATTR',
-  // 'Spruce'
+  'Digital Bazaar',
+   'MATTR',
+   'Spruce'
 ];
 
 // only test listed implementations

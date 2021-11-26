@@ -5,6 +5,6 @@
 
 const requireDir = require('require-dir');
 
-const dir = requireDir('./certificates');
+const dir = requireDir('./credentials');
 
 module.exports = Object.values(dir);
