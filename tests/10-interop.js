@@ -19,8 +19,8 @@ const should = chai.should();
 // test these implementations' issuers or verifiers
 const test = [
   'Digital Bazaar',
-   'MATTR',
-   'Spruce'
+  'MATTR',
+  'Spruce'
 ];
 
 // only test listed implementations
@@ -42,7 +42,7 @@ describe('Verifiable Driver\'s License Credentials', function() {
       this.report = true;
       this.columns = columnNames;
       this.rowLabel = 'Issuer';
-      this.columnLabel = 'Verfier';
+      this.columnLabel = 'Verifier';
       // this will be displayed under the test title
       this.reportData = reportData;
       this.images = images;
@@ -59,7 +59,8 @@ describe('Verifiable Driver\'s License Credentials', function() {
         delete vc.credentialSubject.license.driving_privileges;
         delete vc.credentialSubject.license.portrait;
         reportData[0] = {
-          label: `Verifiable Driver\'s License with an Ed25519 digital signature (${license.issuing_authority})`,
+          label: `Verifiable Driver\'s License with an Ed25519 ` +
+            `digital signature (${license.issuing_authority})`,
           data: JSON.stringify(vc, null, 2)
         };
         const compressedQr = await vpqr.toQrCode({
@@ -86,19 +87,23 @@ describe('Verifiable Driver\'s License Credentials', function() {
           verified
         } = await createBBSreport({inputDocument});
         reportData.push({
-          label: `A Verifiable Driver's License with a BBS+ digital signature (${license.issuing_authority})`,
+          label: `A Verifiable Driver's License with a BBS+ digital ` +
+            `signature (${license.issuing_authority})`,
           data: JSON.stringify(signedDocument, null, 2)
         });
         reportData.push({
-          label: `Selective disclosures for the BBS+ vDL (${license.issuing_authority})`,
+          label: `Selective disclosures for the BBS+ vDL ` +
+            `(${license.issuing_authority})`,
           data: JSON.stringify(disclosures, null, 2)
         });
         reportData.push({
-          label: `A BBS+ derived proof for the selective disclosures (${license.issuing_authority})`,
+          label: `A BBS+ derived proof for the selective disclosures ` +
+            `(${license.issuing_authority})`,
           data: JSON.stringify(derivedProof, null, 2)
         });
         reportData.push({
-          label: `The verification result of the BBS+ derived proof (${license.issuing_authority})`,
+          label: `The verification result of the BBS+ derived proof ` +
+            `(${license.issuing_authority})`,
           data: JSON.stringify(verified, null, 2)
         });
       });
