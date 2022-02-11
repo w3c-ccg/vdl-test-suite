@@ -58,7 +58,7 @@
     "x25519-key-agreement-2020-context": "^1.0.0"
   },
   "engines": {
-    "node": "14.0.0"
+    "node": ">=14.0.0"
   },
   "devDependencies": {
     "eslint": "^7.23.0",
