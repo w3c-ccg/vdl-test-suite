@@ -22,9 +22,8 @@
     "linked data"
   ],
   "author": {
-    "name": "Digital Bazaar, Inc.",
-    "email": "support@digitalbazaar.com",
-    "url": "https://digitalbazaar.com/"
+    "name": "W3C CCG",
+    "url": "https://w3c-ccg.github.io/"
   },
   "bugs": {
     "url": "https://github.com/w3c-ccg/vdl-test-suite/issues"
