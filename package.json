@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/digitalbazaar/vdl-test-suite.git"
+    "url": "git+https://github.com/w3c-ccg/vdl-test-suite.git"
   },
   "keywords": [
     "vDL",
@@ -29,9 +29,9 @@
     "url": "https://digitalbazaar.com/"
   },
   "bugs": {
-    "url": "https://github.com/digitalbazaar/vdl-test-suite/issues"
+    "url": "https://github.com/w3c-ccg/vdl-test-suite/issues"
   },
-  "homepage": "https://github.com/digitalbazaar/vdl-test-suite#readme",
+  "homepage": "https://github.com/w3c-ccg/vdl-test-suite#readme",
   "dependencies": {
     "@digitalbazaar/did-method-key": "^1.0.0",
     "@digitalbazaar/ed25519-signature-2020": "^2.1.0",

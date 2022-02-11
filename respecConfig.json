@@ -2,8 +2,8 @@
   "specStatus": "unofficial",
   "shortName": "verifiable-drivers-license-test-suite",
   "subtitle": "Interoperability Report for Verifiable Driver's License Credentials",
-  "github": "https://github.com/digitalbazaar/vdl-test-suite",
-  "edDraftURI": "https://digitalbazaar.github.io/vdl-test-suite/",
+  "github": "https://github.com/w3c-ccg/vdl-test-suite",
+  "edDraftURI": "https://w3c-ccg.github.io/vdl-test-suite/",
   "doJsonLd": true,
   "includePermalinks": false,
   "editors": [
