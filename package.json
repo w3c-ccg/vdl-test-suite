@@ -48,7 +48,7 @@
     "file-size": "^1.0.0",
     "jsonld-document-loader": "^1.1.0",
     "mocha": "^8.3.2",
-    "mocha-w3c-interop-reporter": "github:digitalbazaar/mocha-w3c-interop-reporter#extend-helpers",
+    "mocha-w3c-interop-reporter": "github:digitalbazaar/mocha-w3c-interop-reporter",
     "mochawesome": "^6.2.2",
     "node-cbor": "^5.0.4",
     "require-dir": "^1.2.0",
