@@ -40,7 +40,7 @@ describe('Verifiable Driver\'s License Credentials', function() {
       // to make an interop matrix with this suite
       this.matrix = true;
       this.report = true;
-      this.columns = columnNames;
+      this.implemented = columnNames;
       this.rowLabel = 'Issuer';
       this.columnLabel = 'Verifier';
       // this will be displayed under the test title

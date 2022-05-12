@@ -4,8 +4,8 @@
   "description": "Test suite to demonstrate interopability between various VC issuers & verifiers.",
   "main": "index.js",
   "scripts": {
-    "parallel": "npm run generate-vdls && mocha tests/ --require esm --reporter ./node_modules/mocha-w3c-interop-reporter/index.js --reporter-options body=\"$PWD/body.hbs\",matrix=\"$PWD/matrix.hbs\",reportDir=\"$PWD/reports\",respec=\"$PWD/respecConfig.json\",title=\"Verifiable Driver's License Interoperability Report 1.0\",helpers=\"$PWD/templateHelpers.js\",suiteLog='./suite.log' --parallel --timeout 15000",
-    "test": "npm run generate-vdls && mocha tests/ --require esm --reporter ./node_modules/mocha-w3c-interop-reporter/index.js --reporter-options body=\"$PWD/body.hbs\",matrix=\"$PWD/matrix.hbs\",reportDir=\"$PWD/reports\",respec=\"$PWD/respecConfig.json\",title=\"Verifiable Driver's License Interoperability Report 1.0\",helpers=\"$PWD/templateHelpers.js\",suiteLog='./suite.log' --timeout 15000",
+    "parallel": "npm run generate-vdls && mocha tests/ --require esm --reporter ./node_modules/mocha-w3c-interop-reporter --reporter-options body=\"$PWD/body.hbs\",matrix=\"$PWD/matrix.hbs\",reportDir=\"$PWD/reports\",respec=\"$PWD/respecConfig.json\",title=\"Verifiable Driver's License Interoperability Report 1.0\",helpers=\"$PWD/templateHelpers.js\",suiteLog='./suite.log' --parallel --timeout 15000",
+    "test": "npm run generate-vdls && mocha tests/ --require esm --reporter ./node_modules/mocha-w3c-interop-reporter --reporter-options body=\"$PWD/body.hbs\",matrix=\"$PWD/matrix.hbs\",reportDir=\"$PWD/reports\",respec=\"$PWD/respecConfig.json\",title=\"Verifiable Driver's License Interoperability Report 1.0\",helpers=\"$PWD/templateHelpers.js\",suiteLog='./suite.log' --timeout 15000",
     "generate-vdls": "node generate-vdls.js",
     "lint": "eslint *.js",
     "postinstall": "cd bbs && npm i"
@@ -48,7 +48,7 @@
     "file-size": "^1.0.0",
     "jsonld-document-loader": "^1.1.0",
     "mocha": "^8.3.2",
-    "mocha-w3c-interop-reporter": "github:digitalbazaar/mocha-w3c-interop-reporter",
+    "mocha-w3c-interop-reporter": "github:digitalbazaar/mocha-w3c-interop-reporter#use-implemented-not-implemented",
     "mochawesome": "^6.2.2",
     "node-cbor": "^5.0.4",
     "require-dir": "^1.2.0",
