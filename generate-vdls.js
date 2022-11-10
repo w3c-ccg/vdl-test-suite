@@ -3,12 +3,14 @@
  */
 'use strict';
 
-import * as didKeyDriver from '@digitalbazaar/did-method-key';
 import {CONTEXT_URL} from 'vdl-context';
+import {driver} from '@digitalbazaar/did-method-key';
 import {join} from 'path';
 import {paths} from './paths.js';
 import stateList from './states.js';
 import {writeJSON} from './files.js';
+
+const didKeyDriver = driver();
 
 async function createVC(state) {
   const contexts = [
