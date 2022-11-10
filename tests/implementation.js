@@ -15,7 +15,7 @@ const _headers = {
   'Content-Type': 'application/json',
 };
 
-export class Implementation {
+export default class Implementation {
   constructor(settings) {
     this.settings = settings;
   }

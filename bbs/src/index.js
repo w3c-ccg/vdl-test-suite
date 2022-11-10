@@ -17,7 +17,7 @@ import {
   BbsBlsSignatureProof2020,
   deriveProof
 } from '@mattrglobal/jsonld-signatures-bbs';
-import {extendContextLoader, sign, verify, purposes} from 'jsonld-signatures';
+import jsigs from 'jsonld-signatures';
 
 import _keyPairOptions from './data/keyPair.json' assert {type: 'json'};
 import _disclosures from './data/deriveProofFrame.json' assert {type: 'json'};
@@ -56,7 +56,7 @@ const customDocLoader = url => {
 };
 
 //Extended document load that uses local contexts
-const _documentLoader = extendContextLoader(customDocLoader);
+const _documentLoader = jsigs.extendContextLoader(customDocLoader);
 
 /**
  * Creates a BBS+ report for a VC.
@@ -81,7 +81,7 @@ export const createBBSreport = async ({
   const keyPair = await new Bls12381G2KeyPair(keyPairOptions);
 
   //Sign the input document
-  const signedDocument = await sign(inputDocument, {
+  const signedDocument = await jsigs.sign(inputDocument, {
     suite: new BbsBlsSignature2020({key: keyPair}),
     purpose: new purposes.AssertionProofPurpose(),
     documentLoader

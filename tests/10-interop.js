@@ -2,6 +2,7 @@
  * Copyright (c) 2021-2022 Digital Bazaar, Inc. All rights reserved.
  */
 
+import * as vpqr from '@digitalbazaar/vpqr';
 import {createCompressedVC, deepClone} from './helpers.js';
 import allVendors from '../implementations.cjs';
 import certificates from '../credentials.cjs';
@@ -9,9 +10,8 @@ import chai from 'chai';
 import {createBBSreport} from '../bbs/src/index.js';
 import {documentLoader} from './loader.js';
 import filesize from 'file-size';
-import Implementation from './implementation.cjs';
+import Implementation from './implementation.js';
 import {testCredential} from './assertions.js';
-import vpqr from '@digitalbazaar/vpqr';
 
 const should = chai.should();
 
