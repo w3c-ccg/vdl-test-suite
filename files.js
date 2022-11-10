@@ -3,11 +3,16 @@
  */
 'use strict';
 
-const {join} = require('path');
-const {createReadStream, writeFile, readdir, readFile} = require('fs');
-const {finished} = require('stream');
-const {promisify} = require('util');
-const csv = require('csv-parse');
+import {
+  createReadStream,
+  readdir,
+  readFile,
+  writeFile
+} from 'fs';
+import csv from 'csv-parse';
+import {finished} from 'stream';
+import {join} from 'path';
+import {promisify} from 'util';
 
 const asyncFinished = promisify(finished);
 const asyncReadDir = promisify(readdir);
@@ -23,7 +28,7 @@ const asyncReadFile = promisify(readFile);
  *
  * @returns {Promise<Array<string>>} Dir and file names.
 */
-async function getDir(path) {
+export async function getDir(path) {
   const directory = await asyncReadDir(path);
   if(directory.length <= 0) {
     throw new Error(`Dir ${path} is empty`);
@@ -38,14 +43,14 @@ async function getDir(path) {
  *
  * @returns {Promise<Array<string>>} Gets files as strings.
  */
-async function getDirFiles(path) {
+export async function getDirFiles(path) {
   const dir = await getDir(path);
   const files = await Promise.all(dir.map(
     fileName => asyncReadFile(join(path, fileName), 'utf8')));
   return files;
 }
 
-async function getJSONFiles(path) {
+export async function getJSONFiles(path) {
   const strings = await getDirFiles(path);
   return strings.map(JSON.parse);
 }
@@ -59,7 +64,7 @@ async function getJSONFiles(path) {
  *
  * @returns {Promise<Array<Array<string>>>} Each row is an array of strings.
  */
-async function getCSV({path, parser = new csv.Parser()}) {
+export async function getCSV({path, parser = new csv.Parser()}) {
   const records = [];
   const fileStream = createReadStream(path).pipe(parser);
   fileStream.on('readable', function() {
@@ -82,15 +87,6 @@ async function getCSV({path, parser = new csv.Parser()}) {
  *
  * @returns {Promise} Resolves on write.
  */
-async function writeJSON({path, data}) {
+export async function writeJSON({path, data}) {
   return asyncWriteFile(path, JSON.stringify(data, null, 2));
 }
-
-module.exports = {
-  getCSV,
-  getDir,
-  getDirFiles,
-  getJSONFiles,
-  writeJSON
-};
-
