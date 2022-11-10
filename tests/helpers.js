@@ -1,7 +1,14 @@
-const vc = require('@digitalbazaar/vc');
-const {Ed25519Signature2020} = require('@digitalbazaar/ed25519-signature-2020');
 
-const didKeyDriver = require('@digitalbazaar/did-method-key').driver();
+/*!
+ * Copyright (c) 2021-2022 Digital Bazaar, Inc. All rights reserved.
+ */
+'use strict';
+
+import * as vc from '@digitalbazaar/vc';
+import {driver} from '@digitalbazaar/did-method-key';
+import {Ed25519Signature2020} from '@digitalbazaar/ed25519-signature-2020';
+
+const didKeyDriver = driver();
 
 export const createCompressedVC = async ({certificate, documentLoader}) => {
   const {didDocument, keyPairs} = await didKeyDriver.generate();

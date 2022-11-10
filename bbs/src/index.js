@@ -19,12 +19,12 @@ import {
 } from '@mattrglobal/jsonld-signatures-bbs';
 import {extendContextLoader, sign, verify, purposes} from 'jsonld-signatures';
 
-import _keyPairOptions from './data/keyPair.json';
-import _disclosures from './data/deriveProofFrame.json';
-import exampleControllerDoc from './data/controllerDocument.json';
-import bbsContext from './data/bbs.json';
-import credentialContext from './data/credentialsContext.json';
-import jwsContext from './data/jwsContext.json';
+import _keyPairOptions from './data/keyPair.json' assert {type: 'json'};
+import _disclosures from './data/deriveProofFrame.json' assert {type: 'json'};
+import exampleControllerDoc from './data/controllerDocument.json' assert {type: 'json'};
+import bbsContext from './data/bbs.json' assert {type: 'json'};
+import credentialContext from './data/credentialsContext.json' assert {type: 'json'};
+import jwsContext from './data/jwsContext.json' assert {type: 'json'};
 import {CONTEXT_URL as vdlContextUri, CONTEXT} from 'vdl-context';
 
 const documents = {

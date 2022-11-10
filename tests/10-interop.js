@@ -1,18 +1,17 @@
 /*!
- * Copyright (c) 2021 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2021-2022 Digital Bazaar, Inc. All rights reserved.
  */
-'use strict';
 
-const vpqr = require('@digitalbazaar/vpqr');
-const chai = require('chai');
-const filesize = require('file-size');
-const Implementation = require('./implementation.cjs');
-const {testCredential} = require('./assertions');
-const certificates = require('../credentials');
-const allVendors = require('../implementations');
-const {documentLoader} = require('./loader.js');
-const {createCompressedVC, deepClone} = require('./helpers');
-const {createBBSreport} = require('../bbs/src');
+import {createCompressedVC, deepClone} from './helpers.js';
+import allVendors from '../implementations.cjs';
+import certificates from '../credentials.cjs';
+import chai from 'chai';
+import {createBBSreport} from '../bbs/src/index.js';
+import {documentLoader} from './loader.js';
+import filesize from 'file-size';
+import Implementation from './implementation.cjs';
+import {testCredential} from './assertions.js';
+import vpqr from '@digitalbazaar/vpqr';
 
 const should = chai.should();
 

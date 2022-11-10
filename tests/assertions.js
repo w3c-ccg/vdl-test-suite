@@ -1,10 +1,10 @@
 /*!
- * Copyright (c) 2021 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2021-2022 Digital Bazaar, Inc. All rights reserved.
  */
 'use strict';
 
-const chai = require('chai');
-const {CONTEXT_URL: testContextUri} = require('vdl-context');
+import chai from 'chai';
+import {CONTEXT_URL as testContextUri} from 'vdl-context';
 
 const should = chai.should();
 
