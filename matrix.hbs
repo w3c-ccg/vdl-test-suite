@@ -55,6 +55,7 @@
         <!--These contain if the test passed, failed, or was skipped-->
         {{#each cells}}
           <td class="{{state}} {{getOptional optional}}">{{getStatusMark state}}</td>
+          {{> error.hbs error=err}}
         {{/each}}
       </tr>
     {{/each}}
