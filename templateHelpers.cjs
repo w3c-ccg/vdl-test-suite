@@ -1,9 +1,11 @@
-import states from './states.js';
+const states = require('./states.json');
 
-export const api = {
+const api = {
   getState(abbreviation) {
     const {name} = states.find(s => s.code === abbreviation) || {};
     return name || 'Unknown';
   }
 };
+
+module.exports = api;
 

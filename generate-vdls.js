@@ -7,7 +7,7 @@ import {CONTEXT_URL} from 'vdl-context';
 import {driver} from '@digitalbazaar/did-method-key';
 import {join} from 'path';
 import {paths} from './paths.js';
-import stateList from './states.js';
+import stateList from './states.json' assert {type: 'json'};
 import {writeJSON} from './files.js';
 
 const didKeyDriver = driver();
