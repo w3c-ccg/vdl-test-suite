@@ -28,6 +28,26 @@
    .small-font {
      font-size: 0.75rem;
    }
+   .highlight-on-hover:hover {
+     background-color: yellow;
+     cursor: default;
+   }
+   .highlight-on-hover:hover + .relative-pos > .err {
+     display: block;
+   }
+   pre, code.hljs {
+     overflow: auto;
+   }
+   .relative-pos {
+     position: relative;
+     width: 0.5rem;
+     height: 0.5rem;
+     z-index: 1;
+   }
+   .relative-pos:hover > .err {
+     display: block;
+   }
+
    pre, code.hljs{
      overflow: auto;
    }
@@ -54,8 +74,10 @@
         <td class="no-wrap small-font">{{id}}</td>
         <!--These contain if the test passed, failed, or was skipped-->
         {{#each cells}}
-          <td class="{{state}} {{getOptional optional}}">{{getStatusMark state}}</td>
-          {{> error.hbs error=err}}
+          <td class="{{state}} {{getOptional optional}}">
+            <div class= "highlight-on-hover">{{getStatusMark state}}</div>
+            {{> error.hbs error=err}}
+          </td>
         {{/each}}
       </tr>
     {{/each}}
