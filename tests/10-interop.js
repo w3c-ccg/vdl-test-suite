@@ -4,13 +4,12 @@
 
 import * as vpqr from '@digitalbazaar/vpqr';
 import {createCompressedVC, deepClone} from './helpers.js';
-import allVendors from '../implementations.cjs';
+import {allImplementations} from 'vc-api-test-suite-implementations';
 import certificates from '../credentials.cjs';
 import chai from 'chai';
 import {createBBSreport} from '../bbs/src/index.js';
 import {documentLoader} from './loader.js';
 import filesize from 'file-size';
-import Implementation from './implementation.js';
 import {testCredential} from './assertions.js';
 
 const should = chai.should();
@@ -23,8 +22,9 @@ const test = [
 ];
 
 // only test listed implementations
-const implementations = allVendors.filter(v => test.includes(v.name));
-
+const implementations = test.map(name => allImplementations.get(name));
+console.log('implementations');
+console.log(JSON.stringify(implementations, null, 2));
 describe('Verifiable Driver\'s License Credentials', function() {
   const summaries = new Set();
   this.summary = summaries;
@@ -106,7 +106,7 @@ describe('Verifiable Driver\'s License Credentials', function() {
           data: JSON.stringify(verified, null, 2)
         });
       });
-      for(const issuer of implementations) {
+      for(const implementation of implementations) {
         // this is the credential for the verifier tests
         let credential = null;
         //FIXME issuerResponse should be used to check status 201
@@ -117,9 +117,7 @@ describe('Verifiable Driver\'s License Credentials', function() {
             try {
               // ensure this implementation is a column in the matrix
               columnNames.push(issuer.name);
-              const implementation = new Implementation(issuer);
-              const response = await implementation.issue(
-                {credential: certificate});
+              const response = await issuer.post({credential: certificate});
               //FIXME issuerResponse should be used to check status 201
               //issuerResponse = response;
               // this credential is not tested
@@ -198,8 +196,7 @@ describe('Verifiable Driver\'s License Credentials', function() {
               // in the interop matrix the result goes in
               this.test.cell = {columnId: verifier.name, rowId: issuer.name};
               should.exist(credential);
-              const implementation = new Implementation(verifier);
-              const response = await implementation.verify({credential});
+              const response = await verifier.post({credential});
               should.exist(response);
               // verifier returns 200
               response.status.should.equal(200);
