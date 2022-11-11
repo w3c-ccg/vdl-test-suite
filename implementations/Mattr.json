@@ -1,9 +1,0 @@
-{
-  "name": "MATTR",
-  "implementation": "MATTR",
-  "issuer": {
-    "id": "did:key:z6MkftZWDTkv62SbkKHzPTKSMs8wYAZrysdxagXAMkP7P2Xg",
-    "endpoint": "https://platform.interop.mattrlabs.io/vc-http-api/v1/credentials"
-  },
-  "verifier": "https://platform.interop.mattrlabs.io/vc-http-api/v1/credentials/verify"
-}
