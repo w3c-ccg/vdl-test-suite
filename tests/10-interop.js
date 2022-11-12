@@ -4,12 +4,12 @@
 
 import * as vpqr from '@digitalbazaar/vpqr';
 import {createCompressedVC, deepClone} from './helpers.js';
-import {allImplementations} from 'vc-api-test-suite-implementations';
 import certificates from '../credentials.cjs';
 import chai from 'chai';
 import {createBBSreport} from '../bbs/src/index.js';
 import {documentLoader} from './loader.js';
 import filesize from 'file-size';
+import {filterImplementations} from 'vc-api-test-suite-implementations';
 import {testCredential} from './assertions.js';
 
 const should = chai.should();
@@ -17,14 +17,14 @@ const should = chai.should();
 // test these implementations' issuers or verifiers
 const test = [
   'Digital Bazaar',
-  'MATTR',
-  'Spruce'
+  'API Catalog',
+  'Danube Tech'
 ];
 
 // only test listed implementations
-const implementations = test.map(name => allImplementations.get(name));
-console.log('implementations');
-console.log(JSON.stringify(implementations, null, 2));
+const {match: implementations} = filterImplementations({
+  filter: ({key}) => test.includes(key)
+});
 describe('Verifiable Driver\'s License Credentials', function() {
   const summaries = new Set();
   this.summary = summaries;
@@ -106,17 +106,18 @@ describe('Verifiable Driver\'s License Credentials', function() {
           data: JSON.stringify(verified, null, 2)
         });
       });
-      for(const implementation of implementations) {
+      for(const [name, implementation] of implementations) {
         // this is the credential for the verifier tests
         let credential = null;
         //FIXME issuerResponse should be used to check status 201
         //let issuerResponse = null;
         let error = null;
-        describe(issuer.name, function() {
+        const issuer = implementation.issuers.find(i => i.tags.has('vc-api'));
+        describe(name, function() {
           before(async function() {
             try {
               // ensure this implementation is a column in the matrix
-              columnNames.push(issuer.name);
+              columnNames.push(name);
               const response = await issuer.post({credential: certificate});
               //FIXME issuerResponse should be used to check status 201
               //issuerResponse = response;
@@ -143,7 +144,7 @@ describe('Verifiable Driver\'s License Credentials', function() {
           });
           // this ensures the implementation issuer
           // issues correctly
-          it(`should be issued by ${issuer.name}`, async function() {
+          it(`should be issued by ${name}`, async function() {
             should.exist(
               credential, `Expected VC from ${issuer.name} to exist.`);
             should.not.exist(error, `Expected ${issuer.name} to not error.`);
