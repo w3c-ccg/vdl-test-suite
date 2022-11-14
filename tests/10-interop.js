@@ -31,15 +31,13 @@ describe('Verifiable Driver\'s License Credentials', function() {
   for(const certificate of certificates) {
     const {credentialSubject: {license}} = certificate;
     describe(license.issuing_authority, function() {
-      // column names for the matrix go here
-      const columnNames = [];
       const reportData = [];
       const images = [];
       // this will tell the report
       // to make an interop matrix with this suite
       this.matrix = true;
       this.report = true;
-      this.implemented = columnNames;
+      this.implemented = [...implementations.keys()];
       this.rowLabel = 'Issuer';
       this.columnLabel = 'Verifier';
       // this will be displayed under the test title
@@ -116,8 +114,6 @@ describe('Verifiable Driver\'s License Credentials', function() {
         describe(name, function() {
           before(async function() {
             try {
-              // ensure this implementation is a column in the matrix
-              columnNames.push(name);
               const response = await issuer.post({credential: certificate});
               //FIXME issuerResponse should be used to check status 201
               //issuerResponse = response;
@@ -190,12 +186,14 @@ describe('Verifiable Driver\'s License Credentials', function() {
           });
           // this sends a credential issued by the implementation
           // to each verifier
-          for(const verifier of implementations) {
-            const testTitle = `should be verified by ${verifier.name}`;
+          for(const [name, implementation] of implementations) {
+            const verifier = implementation.verifiers.find(
+              v => v.tags.has('vc-api'));
+            const testTitle = `should be verified by ${name}`;
             it(testTitle, async function() {
               // this tells the test report which cell
               // in the interop matrix the result goes in
-              this.test.cell = {columnId: verifier.name, rowId: issuer.name};
+              this.test.cell = {columnId: name, rowId: issuer.name};
               should.exist(credential);
               const response = await verifier.post({credential});
               should.exist(response);
