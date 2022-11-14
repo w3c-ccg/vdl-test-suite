@@ -4,7 +4,6 @@
 'use strict';
 
 import * as vc from '@digitalbazaar/vc';
-import {CONTEXT} from 'vdl-context';
 import {driver} from '@digitalbazaar/did-method-key';
 import {Ed25519Signature2020} from '@digitalbazaar/ed25519-signature-2020';
 import {klona} from 'klona';
@@ -14,7 +13,6 @@ const didKeyDriver = driver();
 
 export function createIssuerBody({issuer, vc}) {
   const _vc = klona(vc);
-  _vc['@context'][1] = CONTEXT;
   const {settings: {id, options}} = issuer;
   _vc.issuer = id;
   _vc.id = `urn:uuid:${uuidv4()}`;

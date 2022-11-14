@@ -21,8 +21,7 @@ const should = chai.should();
 
 // test these implementations' issuers or verifiers
 const test = new Set([
-  'Digital Bazaar',
-  'API Catalog'
+  'Digital Bazaar'
 ]);
 
 // only test listed implementations
@@ -147,7 +146,7 @@ describe('Verifiable Driver\'s License Credentials', function() {
           });
           // this ensures the implementation issuer
           // issues correctly
-          it.only(`should be issued by ${name}`, async function() {
+          it(`should be issued by ${name}`, async function() {
             should.exist(
               credential, `Expected VC from ${issuer.name} to exist.`);
             should.not.exist(error, `Expected ${issuer.name} to not error.`);
@@ -202,7 +201,7 @@ describe('Verifiable Driver\'s License Credentials', function() {
               // in the interop matrix the result goes in
               this.test.cell = {columnId: name, rowId: issuer.name};
               should.exist(credential);
-              const response = await verifier.post({
+              const {result: response} = await verifier.post({
                 json: createVerifierBody({vc: credential})
               });
               should.exist(response);
