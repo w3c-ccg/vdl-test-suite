@@ -83,14 +83,14 @@ export const createBBSreport = async ({
   //Sign the input document
   const signedDocument = await jsigs.sign(inputDocument, {
     suite: new BbsBlsSignature2020({key: keyPair}),
-    purpose: new purposes.AssertionProofPurpose(),
+    purpose: new jsigs.purposes.AssertionProofPurpose(),
     documentLoader
   });
 
   //Verify the proof
-  let verified = await verify(signedDocument, {
+  let verified = await jsigs.verify(signedDocument, {
     suite: new BbsBlsSignature2020(),
-    purpose: new purposes.AssertionProofPurpose(),
+    purpose: new jsigs.purposes.AssertionProofPurpose(),
     documentLoader
   });
   //Derive a proof
@@ -100,9 +100,9 @@ export const createBBSreport = async ({
   });
 
   //Verify the derived proof
-  verified = await verify(derivedProof, {
+  verified = await jsigs.verify(derivedProof, {
     suite: new BbsBlsSignatureProof2020(),
-    purpose: new purposes.AssertionProofPurpose(),
+    purpose: new jsigs.purposes.AssertionProofPurpose(),
     documentLoader
   });
   return {
