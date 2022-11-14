@@ -3,13 +3,18 @@
  */
 
 import * as vpqr from '@digitalbazaar/vpqr';
-import {createCompressedVC, createIssuerBody, deepClone} from './helpers.js';
+import {
+  createCompressedVC,
+  createIssuerBody,
+  createVerifierBody
+} from './helpers.js';
 import certificates from '../credentials.cjs';
 import chai from 'chai';
 import {createBBSreport} from '../bbs/src/index.js';
 import {documentLoader} from './loader.js';
 import filesize from 'file-size';
 import {filterImplementations} from 'vc-api-test-suite-implementations';
+import {klona} from 'klona';
 import {testCredential} from './assertions.js';
 
 const should = chai.should();
@@ -17,8 +22,7 @@ const should = chai.should();
 // test these implementations' issuers or verifiers
 const test = new Set([
   'Digital Bazaar',
-  'API Catalog',
-  'Danube Tech'
+  'API Catalog'
 ]);
 
 // only test listed implementations
@@ -50,7 +54,7 @@ describe('Verifiable Driver\'s License Credentials', function() {
           {certificate, documentLoader});
         const [_vc] = compressedVP.verifiableCredential;
         // format VC so context is first in examples
-        let vc = deepClone(_vc);
+        let vc = klona(_vc);
         vc = {'@context': _vc['@context'], ..._vc};
         // remove driving privleges to avoid a CBOR-LD error
         delete vc.credentialSubject.license.driving_privileges;
@@ -114,8 +118,9 @@ describe('Verifiable Driver\'s License Credentials', function() {
         describe(name, function() {
           before(async function() {
             try {
+              const json = createIssuerBody({issuer, vc: certificate});
               const response = await issuer.post({
-                json: createIssuerBody({issuer, vc: certificate})
+                json
               });
               //FIXME issuerResponse should be used to check status 201
               //issuerResponse = response;
@@ -197,7 +202,9 @@ describe('Verifiable Driver\'s License Credentials', function() {
               // in the interop matrix the result goes in
               this.test.cell = {columnId: name, rowId: issuer.name};
               should.exist(credential);
-              const response = await verifier.post({credential});
+              const response = await verifier.post({
+                json: createVerifierBody({vc: credential})
+              });
               should.exist(response);
               // verifier returns 200
               response.status.should.equal(200);

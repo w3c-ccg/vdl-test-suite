@@ -1,4 +1,3 @@
-
 /*!
  * Copyright (c) 2021-2022 Digital Bazaar, Inc. All rights reserved.
  */
@@ -13,7 +12,7 @@ import {v4 as uuidv4} from 'uuid';
 
 const didKeyDriver = driver();
 
-export const createIssuerBody = ({issuer, vc}) => {
+export function createIssuerBody({issuer, vc}) {
   const _vc = klona(vc);
   _vc['@context'][1] = CONTEXT;
   const {settings: {id, options}} = issuer;
@@ -26,7 +25,16 @@ export const createIssuerBody = ({issuer, vc}) => {
     credential: _vc,
     options
   };
-};
+}
+
+export function createVerifierBody({vc}) {
+  return {
+    verifiableCredential: vc,
+    options: {
+      checks: ['proof'],
+    }
+  };
+}
 
 export const createCompressedVC = async ({certificate, documentLoader}) => {
   const {didDocument, keyPairs} = await didKeyDriver.generate();
@@ -52,5 +60,3 @@ export const createCompressedVC = async ({certificate, documentLoader}) => {
 export function ISOTimeStamp({date = new Date()} = {}) {
   return date.toISOString().replace(/\.\d+Z$/, 'Z');
 }
-
-export const deepClone = data => JSON.parse(JSON.stringify(data, null, 2));
