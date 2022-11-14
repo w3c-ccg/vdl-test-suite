@@ -4,8 +4,6 @@
 'use strict';
 
 import chai from 'chai';
-import {CONTEXT_URL as testContextUri} from 'vdl-context';
-
 const should = chai.should();
 
 /**
@@ -22,7 +20,6 @@ export const testCredential = credential => {
   // NOTE: some issuers add a revocation list context to the types
   credential['@context'].should.include(
     'https://www.w3.org/2018/credentials/v1');
-  credential['@context'].should.include(testContextUri);
   credential.should.have.property('type');
   credential.type.should.eql([
     'VerifiableCredential',

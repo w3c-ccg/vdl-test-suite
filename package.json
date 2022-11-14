@@ -47,6 +47,7 @@
     "ed25519-signature-2020-context": "^1.0.1",
     "file-size": "^1.0.0",
     "jsonld-document-loader": "^1.1.0",
+    "klona": "^2.0.5",
     "mocha": "^8.3.2",
     "node-cbor": "^5.0.4",
     "require-dir": "^1.2.0",

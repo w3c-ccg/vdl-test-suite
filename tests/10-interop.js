@@ -3,7 +3,7 @@
  */
 
 import * as vpqr from '@digitalbazaar/vpqr';
-import {createCompressedVC, deepClone} from './helpers.js';
+import {createCompressedVC, createIssuerBody, deepClone} from './helpers.js';
 import certificates from '../credentials.cjs';
 import chai from 'chai';
 import {createBBSreport} from '../bbs/src/index.js';
@@ -15,15 +15,15 @@ import {testCredential} from './assertions.js';
 const should = chai.should();
 
 // test these implementations' issuers or verifiers
-const test = [
+const test = new Set([
   'Digital Bazaar',
   'API Catalog',
   'Danube Tech'
-];
+]);
 
 // only test listed implementations
 const {match: implementations} = filterImplementations({
-  filter: ({key}) => test.includes(key)
+  filter: ({key}) => test.has(key)
 });
 describe('Verifiable Driver\'s License Credentials', function() {
   const summaries = new Set();
@@ -114,7 +114,9 @@ describe('Verifiable Driver\'s License Credentials', function() {
         describe(name, function() {
           before(async function() {
             try {
-              const response = await issuer.post({credential: certificate});
+              const response = await issuer.post({
+                json: createIssuerBody({issuer, vc: certificate})
+              });
               //FIXME issuerResponse should be used to check status 201
               //issuerResponse = response;
               // this credential is not tested
@@ -140,7 +142,7 @@ describe('Verifiable Driver\'s License Credentials', function() {
           });
           // this ensures the implementation issuer
           // issues correctly
-          it(`should be issued by ${name}`, async function() {
+          it.only(`should be issued by ${name}`, async function() {
             should.exist(
               credential, `Expected VC from ${issuer.name} to exist.`);
             should.not.exist(error, `Expected ${issuer.name} to not error.`);
