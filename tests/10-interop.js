@@ -18,15 +18,13 @@ import {klona} from 'klona';
 import {testCredential} from './assertions.js';
 
 const should = chai.should();
-
-// test these implementations' issuers or verifiers
-const test = new Set([
-  'Digital Bazaar'
-]);
+const tag = 'vdl-test';
 
 // only test listed implementations
 const {match: implementations} = filterImplementations({
-  filter: ({key}) => test.has(key)
+  filter: ({value}) =>
+    value.issuers.some(issuer => issuer.tags.has(tag) &&
+    value.verifiers.some(verifier => verifier.tags.has(tag)))
 });
 describe('Verifiable Driver\'s License Credentials', function() {
   const summaries = new Set();
@@ -113,7 +111,7 @@ describe('Verifiable Driver\'s License Credentials', function() {
         //FIXME issuerResponse should be used to check status 201
         //let issuerResponse = null;
         let error = null;
-        const issuer = implementation.issuers.find(i => i.tags.has('vc-api'));
+        const issuer = implementation.issuers.find(i => i.tags.has(tag));
         describe(name, function() {
           before(async function() {
             try {
@@ -194,7 +192,7 @@ describe('Verifiable Driver\'s License Credentials', function() {
           // to each verifier
           for(const [name, implementation] of implementations) {
             const verifier = implementation.verifiers.find(
-              v => v.tags.has('vc-api'));
+              v => v.tags.has(tag));
             const testTitle = `should be verified by ${name}`;
             it(testTitle, async function() {
               // this tells the test report which cell
