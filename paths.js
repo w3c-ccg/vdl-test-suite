@@ -3,13 +3,9 @@
  */
 'use strict';
 
-const {join} = require('path');
+import {join} from 'path';
 
-const paths = {
+export const paths = {
   credentials: join(process.cwd(), 'credentials'),
   implementations: join(process.cwd(), 'implementations')
-};
-
-module.exports = {
-  paths
 };

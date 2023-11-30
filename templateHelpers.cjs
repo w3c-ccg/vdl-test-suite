@@ -1,4 +1,4 @@
-const states = require('./states');
+const states = require('./states.json');
 
 const api = {
   getState(abbreviation) {
@@ -6,4 +6,6 @@ const api = {
     return name || 'Unknown';
   }
 };
+
 module.exports = api;
+

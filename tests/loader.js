@@ -1,22 +1,22 @@
 /*!
- * Copyright (c) 2021 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2021-2022 Digital Bazaar, Inc. All rights reserved.
  */
-'use strict';
 
-const didKey = require('@digitalbazaar/did-method-key');
-const citContext = require('cit-context');
-const didContext = require('did-context');
-const revocationContext = require('vc-revocation-list-context');
-const ed25519 = require('ed25519-signature-2020-context');
-const x25519 = require('x25519-key-agreement-2020-context');
-const cred = require('credentials-context');
-const securityContext = require('@digitalbazaar/security-context');
-const {JsonLdDocumentLoader} = require('jsonld-document-loader');
-const {CONTEXT_URL: testContextUri, CONTEXT} = require('vdl-context');
-const _keyPairOptions = require('../bbs/src/data/keyPair.json');
-const exampleControllerDoc = require('../bbs/src/data/controllerDocument.json');
-const bbsContext = require('../bbs/src/data/bbs.json');
-const jwsContext = require('../bbs/src/data/jwsContext.json');
+import {CONTEXT_URL as testContextUri, CONTEXT} from 'vdl-context';
+import citContext from 'cit-context';
+import cred from 'credentials-context';
+import didContext from 'did-context';
+import {driver} from '@digitalbazaar/did-method-key';
+import ed25519 from 'ed25519-signature-2020-context';
+import {JsonLdDocumentLoader} from 'jsonld-document-loader';
+import revocationContext from 'vc-revocation-list-context';
+import securityContext from '@digitalbazaar/security-context';
+import x25519 from 'x25519-key-agreement-2020-context';
+
+import _keyPairOptions from '../bbs/src/data/keyPair.json' assert { type: 'json' };
+import exampleControllerDoc from '../bbs/src/data/controllerDocument.json' assert { type: 'json' };
+import bbsContext from '../bbs/src/data/bbs.json' assert { type: 'json' };
+import jwsContext from '../bbs/src/data/jwsContext.json' assert { type: 'json' };
 
 const {contexts: credentialsContext, constants: {CREDENTIALS_CONTEXT_V1_URL}} =
   cred;
@@ -53,7 +53,7 @@ staticLoader.addStatic('https://w3id.org/security/v2', bbsContext);
 staticLoader.addStatic(
   'https://w3id.org/security/suites/jws-2020/v1', jwsContext);
 
-const didKeyDriver = didKey.driver();
+const didKeyDriver = driver();
 
 export const documentLoader = async url => {
   if(url && url.startsWith('did:key:')) {

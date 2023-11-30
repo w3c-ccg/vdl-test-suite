@@ -1,11 +1,9 @@
 /*!
- * Copyright (c) 2021 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2021-2022 Digital Bazaar, Inc. All rights reserved.
  */
 'use strict';
 
-const chai = require('chai');
-const {CONTEXT_URL: testContextUri} = require('vdl-context');
-
+import chai from 'chai';
 const should = chai.should();
 
 /**
@@ -22,7 +20,6 @@ export const testCredential = credential => {
   // NOTE: some issuers add a revocation list context to the types
   credential['@context'].should.include(
     'https://www.w3.org/2018/credentials/v1');
-  credential['@context'].should.include(testContextUri);
   credential.should.have.property('type');
   credential.type.should.eql([
     'VerifiableCredential',

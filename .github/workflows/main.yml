@@ -25,6 +25,10 @@ jobs:
         run: npm install --legacy-peer-deps
       - name: Clean VDLs
         run: rm -f ./credentials/*.json
+      - name: Generate VDLs
+        env:
+          KEY_SEED_DB: ${{ secrets.KEY_SEED_DB }}
+        run: npm run generate-vdls
       - name: Run test with Node.js ${{ matrix.node-version }}
         env:
           KEY_SEED_DB: ${{ secrets.KEY_SEED_DB }}

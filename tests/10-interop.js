@@ -1,46 +1,44 @@
 /*!
- * Copyright (c) 2021 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2021-2022 Digital Bazaar, Inc. All rights reserved.
  */
-'use strict';
 
-const vpqr = require('@digitalbazaar/vpqr');
-const chai = require('chai');
-const filesize = require('file-size');
-const Implementation = require('./implementation.cjs');
-const {testCredential} = require('./assertions');
-const certificates = require('../credentials');
-const allVendors = require('../implementations');
-const {documentLoader} = require('./loader.js');
-const {createCompressedVC, deepClone} = require('./helpers');
-const {createBBSreport} = require('../bbs/src');
+import * as vpqr from '@digitalbazaar/vpqr';
+import {
+  createCompressedVC,
+  createIssuerBody,
+  createVerifierBody
+} from './helpers.js';
+import certificates from '../credentials.cjs';
+import chai from 'chai';
+import {createBBSreport} from '../bbs/src/index.js';
+import {documentLoader} from './loader.js';
+import filesize from 'file-size';
+import {filterImplementations} from 'vc-api-test-suite-implementations';
+import {klona} from 'klona';
+import {testCredential} from './assertions.js';
 
 const should = chai.should();
-
-// test these implementations' issuers or verifiers
-const test = [
-  'Digital Bazaar',
-  'MATTR',
-  'Spruce'
-];
+const tag = 'vdl-test';
 
 // only test listed implementations
-const implementations = allVendors.filter(v => test.includes(v.name));
-
+const {match: implementations} = filterImplementations({
+  filter: ({value}) =>
+    value.issuers.some(issuer => issuer.tags.has(tag) &&
+    value.verifiers.some(verifier => verifier.tags.has(tag)))
+});
 describe('Verifiable Driver\'s License Credentials', function() {
   const summaries = new Set();
   this.summary = summaries;
   for(const certificate of certificates) {
     const {credentialSubject: {license}} = certificate;
     describe(license.issuing_authority, function() {
-      // column names for the matrix go here
-      const columnNames = [];
       const reportData = [];
       const images = [];
       // this will tell the report
       // to make an interop matrix with this suite
       this.matrix = true;
       this.report = true;
-      this.implemented = columnNames;
+      this.implemented = [...implementations.keys()];
       this.rowLabel = 'Issuer';
       this.columnLabel = 'Verifier';
       // this will be displayed under the test title
@@ -53,7 +51,7 @@ describe('Verifiable Driver\'s License Credentials', function() {
           {certificate, documentLoader});
         const [_vc] = compressedVP.verifiableCredential;
         // format VC so context is first in examples
-        let vc = deepClone(_vc);
+        let vc = klona(_vc);
         vc = {'@context': _vc['@context'], ..._vc};
         // remove driving privleges to avoid a CBOR-LD error
         delete vc.credentialSubject.license.driving_privileges;
@@ -107,25 +105,28 @@ describe('Verifiable Driver\'s License Credentials', function() {
           data: JSON.stringify(verified, null, 2)
         });
       });
-      for(const issuer of implementations) {
+      for(const [name, implementation] of implementations) {
         // this is the credential for the verifier tests
         let credential = null;
         //FIXME issuerResponse should be used to check status 201
         //let issuerResponse = null;
         let error = null;
-        describe(issuer.name, function() {
+        const issuer = implementation.issuers.find(i => i.tags.has(tag));
+        describe(name, function() {
           before(async function() {
             try {
-              // ensure this implementation is a column in the matrix
-              columnNames.push(issuer.name);
-              const implementation = new Implementation(issuer);
-              const response = await implementation.issue(
-                {credential: certificate});
+              const json = createIssuerBody({issuer, vc: certificate});
+              const {error, data} = await issuer.post({
+                json
+              });
+              if(error) {
+                throw error;
+              }
               //FIXME issuerResponse should be used to check status 201
               //issuerResponse = response;
               // this credential is not tested
               // we just send it to each verifier
-              credential = response.data;
+              credential = data;
               // if the response.data is not directly jsonld unwrap it
               if(!credential['@context']) {
                 for(const key of Object.keys(credential)) {
@@ -146,14 +147,13 @@ describe('Verifiable Driver\'s License Credentials', function() {
           });
           // this ensures the implementation issuer
           // issues correctly
-          it(`should be issued by ${issuer.name}`, async function() {
+          it(`should be issued by ${name}`, async function() {
             should.exist(
               credential, `Expected VC from ${issuer.name} to exist.`);
             should.not.exist(error, `Expected ${issuer.name} to not error.`);
 
             // FIXME issuer should return 201
             //issuerResponse.status.should.equal(201);
-
             testCredential(credential);
             credential.credentialSubject.should.eql(
               certificate.credentialSubject);
@@ -192,15 +192,18 @@ describe('Verifiable Driver\'s License Credentials', function() {
           });
           // this sends a credential issued by the implementation
           // to each verifier
-          for(const verifier of implementations) {
-            const testTitle = `should be verified by ${verifier.name}`;
+          for(const [name, implementation] of implementations) {
+            const verifier = implementation.verifiers.find(
+              v => v.tags.has(tag));
+            const testTitle = `should be verified by ${name}`;
             it(testTitle, async function() {
               // this tells the test report which cell
               // in the interop matrix the result goes in
-              this.test.cell = {columnId: verifier.name, rowId: issuer.name};
+              this.test.cell = {columnId: name, rowId: issuer.name};
               should.exist(credential);
-              const implementation = new Implementation(verifier);
-              const response = await implementation.verify({credential});
+              const {result: response} = await verifier.post({
+                json: createVerifierBody({vc: credential})
+              });
               should.exist(response);
               // verifier returns 200
               response.status.should.equal(200);
