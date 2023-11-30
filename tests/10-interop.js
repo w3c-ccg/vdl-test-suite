@@ -116,14 +116,17 @@ describe('Verifiable Driver\'s License Credentials', function() {
           before(async function() {
             try {
               const json = createIssuerBody({issuer, vc: certificate});
-              const response = await issuer.post({
+              const {error, data} = await issuer.post({
                 json
               });
+              if(error) {
+                throw error;
+              }
               //FIXME issuerResponse should be used to check status 201
               //issuerResponse = response;
               // this credential is not tested
               // we just send it to each verifier
-              credential = response.data;
+              credential = data;
               // if the response.data is not directly jsonld unwrap it
               if(!credential['@context']) {
                 for(const key of Object.keys(credential)) {
@@ -151,7 +154,6 @@ describe('Verifiable Driver\'s License Credentials', function() {
 
             // FIXME issuer should return 201
             //issuerResponse.status.should.equal(201);
-
             testCredential(credential);
             credential.credentialSubject.should.eql(
               certificate.credentialSubject);
